@@ -48,22 +48,31 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <main className="mx-auto mt-16 w-full max-w-2xl text-[var(--foreground)]">
+    <main className="mx-auto w-full max-w-4xl px-4 py-10 text-[var(--foreground)] sm:px-6">
       <BackToGameButton />
-      <h1 className="mb-4 text-2xl font-bold">Profile</h1>
+      <div className="mb-6">
+        <p className="text-xs uppercase tracking-[0.24em] text-[var(--muted)]">
+          Stats
+        </p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight">Profile</h1>
+      </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded border border-[var(--border)] bg-[var(--surface)] p-4">
-          Total Games: {stats.totalGames}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-soft)]">
+          <p className="text-sm text-[var(--muted)]">Total Games</p>
+          <p className="mt-3 text-3xl font-semibold">{stats.totalGames}</p>
         </div>
-        <div className="rounded border border-[var(--border)] bg-[var(--surface)] p-4">
-          Wins: {stats.wins}
+        <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-soft)]">
+          <p className="text-sm text-[var(--muted)]">Wins</p>
+          <p className="mt-3 text-3xl font-semibold">{stats.wins}</p>
         </div>
-        <div className="rounded border border-[var(--border)] bg-[var(--surface)] p-4">
-          Win Rate: {stats.winRate}%
+        <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-soft)]">
+          <p className="text-sm text-[var(--muted)]">Win Rate</p>
+          <p className="mt-3 text-3xl font-semibold">{stats.winRate}%</p>
         </div>
-        <div className="rounded border border-[var(--border)] bg-[var(--surface)] p-4">
-          Avg Guesses: {stats.avgGuesses}
+        <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-soft)]">
+          <p className="text-sm text-[var(--muted)]">Avg Guesses</p>
+          <p className="mt-3 text-3xl font-semibold">{stats.avgGuesses}</p>
         </div>
       </div>
     </main>

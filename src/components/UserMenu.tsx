@@ -19,34 +19,34 @@ export default function UserMenu() {
   };
 
   return (
-    <div className="w-full max-w-36">
+    <div className="w-full max-w-40">
       <details className="w-full">
-        <summary className="block w-full list-none cursor-pointer rounded-md border border-[var(--border)] bg-[var(--surface-strong)] px-2 py-1.5 text-center text-xs text-[var(--foreground)] hover:opacity-90">
+        <summary className="block w-full list-none cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-center text-sm text-[var(--foreground)] shadow-[var(--shadow-soft)] transition-colors hover:bg-[var(--surface-strong)]">
           Menu
         </summary>
 
-        <div className="mt-2 w-full overflow-hidden rounded-md border border-[var(--border)] bg-[var(--surface-strong)]">
+        <div className="mt-2 w-full overflow-hidden rounded-xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] shadow-[var(--shadow-soft)] backdrop-blur">
           <Link
             href="/"
-            className="block px-2 py-1.5 text-center text-xs text-[var(--foreground)] hover:bg-[var(--surface)]"
+            className="block px-3 py-2 text-center text-sm text-[var(--foreground)] transition-colors hover:bg-[var(--surface)]"
           >
             Home
           </Link>
           <Link
             href="/profile"
-            className="block px-2 py-1.5 text-center text-xs text-[var(--foreground)] hover:bg-[var(--surface)]"
+            className="block px-3 py-2 text-center text-sm text-[var(--foreground)] transition-colors hover:bg-[var(--surface)]"
           >
             Profile
           </Link>
           <Link
             href="/history"
-            className="block px-2 py-1.5 text-center text-xs text-[var(--foreground)] hover:bg-[var(--surface)]"
+            className="block px-3 py-2 text-center text-sm text-[var(--foreground)] transition-colors hover:bg-[var(--surface)]"
           >
             History
           </Link>
           <Link
             href="/settings"
-            className="block px-2 py-1.5 text-center text-xs text-[var(--foreground)] hover:bg-[var(--surface)]"
+            className="block px-3 py-2 text-center text-sm text-[var(--foreground)] transition-colors hover:bg-[var(--surface)]"
           >
             Settings
           </Link>
@@ -56,14 +56,14 @@ export default function UserMenu() {
           {!email ? (
             <Link
               href="/auth"
-              className="block px-2 py-1.5 text-center text-xs text-[var(--foreground)] hover:bg-[var(--surface)]"
+              className="block px-3 py-2 text-center text-sm text-[var(--foreground)] transition-colors hover:bg-[var(--surface)]"
             >
               Log in
             </Link>
           ) : (
             <button
               onClick={signOut}
-              className="block w-full px-2 py-1.5 text-center text-xs text-[var(--foreground)] hover:bg-[var(--surface)]"
+              className="block w-full px-3 py-2 text-center text-sm text-[var(--foreground)] transition-colors hover:bg-[var(--surface)]"
             >
               Sign out
             </button>

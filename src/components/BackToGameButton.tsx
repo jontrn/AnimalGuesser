@@ -4,7 +4,7 @@ export default function BackToGameButton() {
   return (
     <Link
       href="/"
-      className="mb-4 inline-flex items-center gap-2 rounded border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-sm text-[var(--foreground)] hover:bg-[var(--surface-strong)]"
+      className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--foreground)] shadow-[var(--shadow-soft)] transition-colors hover:bg-[var(--surface-strong)]"
     >
       {"<- Back to Game"}
     </Link>

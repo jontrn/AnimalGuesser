@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/src/lib/supabase/client";
@@ -34,14 +34,20 @@ export default function Home() {
     });
   };
 
+  const loadRandomAnimal = async () => {
+    const res = await fetch("/api/animal", { method: "POST" });
+    const data = await res.json();
+    return data.animal ?? "";
+  };
+
   const startNextRound = async () => {
     setGuess("");
     setHints([]);
     setWon(false);
     setIsIncorrect(false);
     setIncorrectGuesses([]);
-    await loadRandomAnimal();
     setGaveUp(false);
+    setCurrentAnimal(await loadRandomAnimal());
   };
 
   const giveUp = async () => {
@@ -60,7 +66,7 @@ export default function Home() {
   };
 
   const submitGuess = async () => {
-    if (gaveUp) return;
+    if (gaveUp || won) return;
     if (!guess.trim()) return;
 
     const res = await fetch("/api/hint", {
@@ -86,113 +92,119 @@ export default function Home() {
 
       setWon(true);
       setIsIncorrect(false);
-    } else {
-      setHints((prev) => [...prev, data.hint]);
-      setIsIncorrect(true);
-
-      const normalized = guess.trim();
-      if (normalized) {
-        setIncorrectGuesses((prev) =>
-          prev.includes(normalized) ? prev : [...prev, normalized],
-        );
-      }
-
-      setGuess("");
+      return;
     }
-  };
 
-  const loadRandomAnimal = async () => {
-    const res = await fetch("/api/animal", { method: "POST" });
-    const data = await res.json();
-    setCurrentAnimal(data.animal ?? "");
+    setHints((prev) => [...prev, data.hint]);
+    setIsIncorrect(true);
+
+    const normalized = guess.trim();
+    if (normalized) {
+      setIncorrectGuesses((prev) =>
+        prev.includes(normalized) ? prev : [...prev, normalized],
+      );
+    }
+
+    setGuess("");
   };
 
   useEffect(() => {
-    loadRandomAnimal();
+    const initializeRound = async () => {
+      const animal = await loadRandomAnimal();
+      setCurrentAnimal(animal);
+    };
+
+    void initializeRound();
   }, []);
 
   return (
-    <main className="relative flex min-h-[calc(100svh-64px)] flex-col justify-between p-6">
-      <h1 className="absolute left-1/2 top-6 -translate-x-1/2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-2xl font-extrabold tracking-tight text-[var(--foreground)]">
-        AnimalGuesser
-      </h1>
-      <div className="flex-1 flex flex-col justify-center items-center text-center space-y-4">
-        {hints.map((hint, i) => (
-          <p key={i} className="text-lg">
-            {hint}
-          </p>
-        ))}
-      </div>
+    <main className="mx-auto flex min-h-[calc(100svh-89px)] w-full max-w-7xl flex-col px-4 py-6 sm:px-6 sm:py-8">
+      <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col rounded-[32px] border border-[var(--border)] bg-[var(--surface)] px-5 py-6 sm:px-8 sm:py-8">
+        <div className="flex flex-1 flex-col justify-center text-center">
+          <div className="mx-auto flex min-h-[42vh] w-full max-w-3xl flex-col justify-center gap-5">
+            {hints.map((hint, i) => (
+              <p key={i} className="text-xl leading-9 text-[var(--foreground)] sm:text-3xl">
+                {hint}
+              </p>
+            ))}
+          </div>
+        </div>
 
-      <div className="flex flex-col items-center gap-3">
         {won && (
-          <p className="text-2xl font-bold text-green-600">
+          <p className="mb-4 text-center text-base font-medium text-[var(--foreground)] sm:text-lg">
             Correct! Want another round?
           </p>
         )}
 
         {gaveUp && (
-          <p className="text-2xl font-bold text-yellow-400">
+          <p className="mb-4 text-center text-base font-medium text-[var(--foreground)] sm:text-lg">
             You gave up. The animal was: {currentAnimal}
           </p>
         )}
 
-        <input
-          className="w-80 rounded border px-4 py-2 text-center text-[var(--foreground)] placeholder:text-[var(--muted)] transition-colors"
-          style={{
-            backgroundColor: won
-              ? "var(--success-bg)"
-              : isIncorrect
-                ? "var(--danger-bg)"
-                : "var(--input-bg)",
-            borderColor: won
-              ? "var(--success-border)"
-              : isIncorrect
-                ? "var(--danger-border)"
-                : "var(--input-border)",
-          }}
-          placeholder="Guess the animal..."
-          value={guess}
-          onChange={(e) => setGuess(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && submitGuess()}
-          disabled={won || gaveUp}
-        />
+        <div className="mt-3 w-full border-t border-[var(--border)] pt-5">
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <input
+              className="min-h-14 flex-1 rounded-full border px-5 py-3 text-center text-lg text-[var(--foreground)] placeholder:text-[var(--muted)] outline-none transition-colors"
+              style={{
+                backgroundColor: won
+                  ? "var(--success-bg)"
+                  : isIncorrect
+                    ? "var(--danger-bg)"
+                    : "var(--input-bg)",
+                borderColor: won
+                  ? "var(--success-border)"
+                  : isIncorrect
+                    ? "var(--danger-border)"
+                    : "var(--input-border)",
+              }}
+              placeholder="Guess the animal..."
+              value={guess}
+              onChange={(e) => setGuess(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && submitGuess()}
+              disabled={won || gaveUp}
+            />
 
-        {incorrectGuesses.length > 0 && (
-          <div
-            className="w-80 rounded border px-3 py-2 text-sm"
-            style={{
-              backgroundColor: "var(--danger-bg)",
-              borderColor: "var(--danger-border)",
-              color: "var(--foreground)",
-            }}
-          >
-            Incorrect guesses: {incorrectGuesses.join(", ")}
+            {won || gaveUp ? (
+              <button
+                type="button"
+                onClick={startNextRound}
+                className="min-h-14 rounded-full px-6 py-3 font-medium text-[var(--button-fg)] transition-opacity hover:opacity-90 sm:min-w-44"
+                style={{ backgroundColor: "var(--button-bg)" }}
+              >
+                Next Round
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={submitGuess}
+                className="min-h-14 rounded-full px-6 py-3 font-medium text-[var(--button-fg)] transition-opacity hover:opacity-90 sm:min-w-44"
+                style={{ backgroundColor: "var(--button-bg)" }}
+              >
+                Submit Guess
+              </button>
+            )}
           </div>
-        )}
 
-        {(won || gaveUp) && (
-          <button
-            type="button"
-            onClick={startNextRound}
-            className="rounded px-4 py-2 text-[var(--button-fg)] hover:opacity-90"
-            style={{ backgroundColor: "var(--button-bg)" }}
-          >
-            Next Round
-          </button>
-        )}
+          {incorrectGuesses.length > 0 && (
+            <p className="mt-3 text-center text-sm text-[var(--muted)] sm:text-base">
+              Incorrect guesses: {incorrectGuesses.join(", ")}
+            </p>
+          )}
 
-        {!won && !gaveUp && (
-          <button
-            type="button"
-            onClick={giveUp}
-            className="z-10 mt-2 w-80 rounded px-4 py-2 text-[var(--button-fg)] hover:opacity-90 sm:fixed sm:bottom-6 sm:right-6 sm:mt-0 sm:w-auto"
-            style={{ backgroundColor: "#7a2f2f" }}
-          >
-            Give Up
-          </button>
-        )}
-      </div>
+          {!won && !gaveUp && (
+            <div className="mt-3 flex justify-center">
+              <button
+                type="button"
+                onClick={giveUp}
+                className="px-4 py-2 text-sm font-medium text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+              >
+                Give Up
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
     </main>
   );
 }

@@ -57,17 +57,22 @@ export default function SettingsPage() {
   };
 
   return (
-    <main className="mx-auto mt-16 w-full max-w-2xl text-[var(--foreground)]">
+    <main className="mx-auto w-full max-w-3xl px-4 py-10 text-[var(--foreground)] sm:px-6">
       <BackToGameButton />
-      <h1 className="mb-4 text-2xl font-bold">Settings</h1>
+      <div className="mb-6">
+        <p className="text-xs uppercase tracking-[0.24em] text-[var(--muted)]">
+          Preferences
+        </p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight">Settings</h1>
+      </div>
 
-      <div className="space-y-4 rounded border border-[var(--border)] bg-[var(--surface)] p-4">
+      <div className="space-y-5 rounded-[28px] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
         <div>
-          <label className="mb-1 block text-sm">Theme</label>
+          <label className="mb-2 block text-sm font-medium">Theme</label>
           <select
             value={theme}
             onChange={(e) => setTheme(e.target.value as Theme)}
-            className="w-full rounded border border-[var(--border)] bg-[var(--input-bg)] p-2 text-[var(--foreground)]"
+            className="w-full rounded-2xl border border-[var(--input-border)] bg-[var(--input-bg)] p-3 text-[var(--foreground)] outline-none"
           >
             <option value="light">light</option>
             <option value="dark">dark</option>
@@ -76,11 +81,11 @@ export default function SettingsPage() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm">UI Size</label>
+          <label className="mb-2 block text-sm font-medium">UI Size</label>
           <select
             value={textSize}
             onChange={(e) => setTextSize(e.target.value as TextSize)}
-            className="w-full rounded border border-[var(--border)] bg-[var(--input-bg)] p-2 text-[var(--foreground)]"
+            className="w-full rounded-2xl border border-[var(--input-border)] bg-[var(--input-bg)] p-3 text-[var(--foreground)] outline-none"
           >
             <option value="sm">Small</option>
             <option value="md">Medium</option>
@@ -91,7 +96,7 @@ export default function SettingsPage() {
 
         <button
           onClick={saveSettings}
-          className="rounded bg-[var(--button-bg)] px-4 py-2 text-[var(--button-fg)] hover:opacity-90"
+          className="rounded-2xl bg-[var(--button-bg)] px-4 py-3 font-medium text-[var(--button-fg)] transition-opacity hover:opacity-90"
         >
           Save
         </button>

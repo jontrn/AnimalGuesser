@@ -34,25 +34,34 @@ export default function HistoryPage() {
   }, []);
 
   return (
-    <main className="mx-auto mt-16 max-w-2xl text-[var(--foreground)]">
+    <main className="mx-auto w-full max-w-3xl px-4 py-10 text-[var(--foreground)] sm:px-6">
       <BackToGameButton />
-      <h1 className="mb-4 text-2xl font-bold">History</h1>
-      <div className="space-y-2">
+      <div className="mb-6">
+        <p className="text-xs uppercase tracking-[0.24em] text-[var(--muted)]">
+          Recent Rounds
+        </p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight">History</h1>
+      </div>
+      <div className="space-y-3">
         {rounds.map((r) => (
           <button
             key={r.id}
             type="button"
             onClick={() => setExpandedId((prev) => (prev === r.id ? null : r.id))}
-            className="w-full rounded border border-[var(--border)] bg-[var(--surface)] p-3 text-left"
+            className="w-full rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-4 text-left shadow-[var(--shadow-soft)] transition-colors hover:bg-[var(--surface-strong)]"
           >
-            <p>{new Date(r.created_at).toLocaleString()}</p>
-            <p>Result: {r.won ? "Win" : "Loss"}</p>
-            <p>Animal: {r.animal}</p>
-            <p>Guesses: {r.guess_count}</p>
-            <p>Final Guess: {r.final_guess ?? "N/A"}</p>
+            <p className="text-sm text-[var(--muted)]">
+              {new Date(r.created_at).toLocaleString()}
+            </p>
+            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+              <p>Result: {r.won ? "Win" : "Loss"}</p>
+              <p>Animal: {r.animal}</p>
+              <p>Guesses: {r.guess_count}</p>
+              <p>Final Guess: {r.final_guess ?? "N/A"}</p>
+            </div>
 
             {expandedId === r.id && (
-              <div className="mt-2 space-y-1 border-t border-[var(--border)] pt-2 text-sm">
+              <div className="mt-3 space-y-2 border-t border-[var(--border)] pt-3 text-sm leading-6 text-[var(--foreground-soft)]">
                 <p>
                   Guess List:{" "}
                   {r.guesses && r.guesses.length > 0
