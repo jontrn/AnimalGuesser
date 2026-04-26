@@ -12,7 +12,7 @@
   --input-bg: #111111;
   --input-border: #a9aaaa;
 
-  --button-bg: #3f3f46; /* dark gray */
+  --button-bg: #3f3f46;
   --button-fg: #ffffff;
 
   --danger-bg: rgba(243, 99, 99, 0.2);
@@ -34,7 +34,7 @@
   --input-bg: #f7f5f1;
   --input-border: #9ca3af;
 
-  --button-bg: #4b5563; /* visible on white */
+  --button-bg: #4b5563;
   --button-fg: #ffffff;
 
   --danger-bg: rgba(239, 68, 68, 0.14);

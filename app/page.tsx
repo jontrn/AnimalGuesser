@@ -86,7 +86,6 @@ export default function Home() {
 
       setWon(true);
       setIsIncorrect(false);
-      // keep guess as-is so the correct answer stays visible
     } else {
       setHints((prev) => [...prev, data.hint]);
       setIsIncorrect(true);
@@ -98,7 +97,7 @@ export default function Home() {
         );
       }
 
-      setGuess(""); // optional: clear only after incorrect guesses
+      setGuess("");
     }
   };
 
@@ -117,7 +116,6 @@ export default function Home() {
       <h1 className="absolute left-1/2 top-6 -translate-x-1/2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-2xl font-extrabold tracking-tight text-[var(--foreground)]">
         AnimalGuessr
       </h1>
-      {/* Hint area */}
       <div className="flex-1 flex flex-col justify-center items-center text-center space-y-4">
         {hints.map((hint, i) => (
           <p key={i} className="text-lg">
@@ -126,7 +124,6 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Input + status area */}
       <div className="flex flex-col items-center gap-3">
         {won && (
           <p className="text-2xl font-bold text-green-600">
