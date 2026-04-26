@@ -114,7 +114,7 @@ export default function Home() {
   return (
     <main className="relative flex min-h-[calc(100svh-64px)] flex-col justify-between p-6">
       <h1 className="absolute left-1/2 top-6 -translate-x-1/2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-2xl font-extrabold tracking-tight text-[var(--foreground)]">
-        AnimalGuessr
+        AnimalGuesser
       </h1>
       <div className="flex-1 flex flex-col justify-center items-center text-center space-y-4">
         {hints.map((hint, i) => (
