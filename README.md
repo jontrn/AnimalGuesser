@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AnimalGuesser
 
-## Getting Started
+https://animalguesser.vercel.app/
 
-First, run the development server:
+AnimalGuesser is a guessing game where you try to figure out a hidden animal using AI-generated hints.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Each round picks a random animal and gives you hints one at a time. You guess until you get it right or give up.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What it does
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Picks a random animal each round (avoids repeating recent ones)
+- Uses Groq to generate hints about the animal
+- Tracks guesses, hints, and results for each round
+- Lets users sign in and saves their game history
+- Stores user settings like theme and text size
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech
 
-## Learn More
+- Next.js (App Router)
+- React
+- TypeScript
+- Supabase (auth + database)
+- Groq API
 
-To learn more about Next.js, take a look at the following resources:
+## How it works
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Backend picks an animal and generates hints using the LLM
+- User submits guesses until correct or they give up
+- Everything from the round gets saved to the database
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Link
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+https://animalguesser.vercel.app/
