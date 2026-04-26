@@ -5,12 +5,21 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-const ANIMAL = "elephant";
-
 export async function POST(req: Request) {
-  const { guess, previousHints = [] } = await req.json();
+  const { guess, previousHints = [], animal } = await req.json();
 
-  if (guess.toLowerCase() === ANIMAL) {
+  const normalizedGuess = String(guess ?? "")
+    .trim()
+    .toLowerCase();
+  const targetAnimal = String(animal ?? "")
+    .trim()
+    .toLowerCase();
+
+  if (!targetAnimal) {
+    return NextResponse.json({ error: "Missing animal." }, { status: 400 });
+  }
+
+  if (normalizedGuess === targetAnimal) {
     return NextResponse.json({ correct: true });
   }
 
@@ -22,14 +31,14 @@ export async function POST(req: Request) {
   const prompt = `
 You are playing a guessing game.
 
-The animal is: ${ANIMAL}.
+The animal is: ${targetAnimal}.
 
 Previous hints already given:
 ${previousHintText}
 
 Give a NEW hint that:
 - Does NOT repeat or closely resemble any previous hints
-- Does NOT use the word "${ANIMAL}"
+- Does NOT use the word "${targetAnimal}"
 - Is ONE sentence
 - Does NOT ask a follow-up question
 `;
